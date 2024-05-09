@@ -1,0 +1,60 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+header {
+  box-shadow: 1px 1px 20px -3px black;
+}
+
+.header-container {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+h1 {
+  color: darkmagenta;
+  letter-spacing: 4px;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3rem;
+}
+
+.bg-color {
+  text-align: center;
+  padding: 2rem 4rem;
+  border-radius: 10px;
+  background-color: brown;
+  display: grid;
+  gap: 1rem;
+}
+
+.bg-color h2 {
+  color: white;
+}
+
+.bg-color p {
+  color: darkcyan;
+  font-size: 2rem;
+}
+
+main button {
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  border-color: brown;
+  background-color: transparent;
+  cursor: pointer;
+}
