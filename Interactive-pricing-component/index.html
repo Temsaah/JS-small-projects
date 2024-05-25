@@ -44,20 +44,17 @@
         </div>
         <div class="pricing text-neutral-grayish-blue text-center grid gap-10">
           <div class="views">
-            <p
-              class="views-label uppercase font-bold tracking-widest"
-            >
-              100k pageviews
+            <p class="views-label uppercase font-bold tracking-widest">
+              <span class="page-views">100</span>k pageviews
             </p>
           </div>
           <div class="slider relative">
-            <input class="w-full slider-bar" type="range" name="" id="" />
-            <!-- <div class="slider-bar bg-neutral-l-grayish-blue h-2"></div>
-            <div
-              class="slider-icon top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 absolute w-10 h-10 rounded-full bg-primary-light-red grid place-items-center"
-            >
-              <img src="images/icon-slider.svg" alt="" />
-            </div> -->
+            <input
+              class="w-full slider-bar"
+              type="range"
+              name=""
+              id="slider-range"
+            />
           </div>
           <div class="price flex justify-center items-center gap-2">
             <span
@@ -67,11 +64,11 @@
             <span class="font-medium">/ month</span>
           </div>
           <div
-            class="plan relative flex justify-center gap-5 text-sm font-medium"
+            class="plan relative flex justify-center items-center gap-5 text-sm font-medium"
           >
             <p>Monthly Billing</p>
-            <div class="toggle-switch">
-              <p>SWITCH</p>
+            <div class="toggle-switch transition-all duration-300">
+              <span class="switch-circle transition-all duration-300"></span>
             </div>
             <p>Yearly Billing</p>
             <div class="discount absolute right-0">
@@ -104,5 +101,6 @@
         </div>
       </section>
     </main>
+    <script src="app.js"></script>
   </body>
 </html>
