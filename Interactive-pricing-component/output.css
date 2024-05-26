@@ -703,6 +703,10 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded{
+  border-radius: 0.25rem;
+}
+
 .bg-neutral-dark-desat-blue{
   --tw-bg-opacity: 1;
   background-color: hsl(227 35% 25% / var(--tw-bg-opacity));
@@ -716,6 +720,74 @@ video {
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-red-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
+.bg-primary-pale-blue{
+  --tw-bg-opacity: 1;
+  background-color: hsl(226 100% 87% / var(--tw-bg-opacity));
+}
+
+.bg-neutral-grayish-blue{
+  --tw-bg-opacity: 1;
+  background-color: hsl(225 20% 60% / var(--tw-bg-opacity));
+}
+
+.bg-primary-light-red{
+  --tw-bg-opacity: 1;
+  background-color: hsl(15 100% 70% / var(--tw-bg-opacity));
+}
+
+.bg-primary-light-red\/20{
+  background-color: hsl(15 100% 70% / 0.2);
+}
+
+.bg-primary-light-red\/30{
+  background-color: hsl(15 100% 70% / 0.3);
+}
+
+.bg-primary-light-red\/0{
+  background-color: hsl(15 100% 70% / 0);
+}
+
+.bg-primary-light-red\/40{
+  background-color: hsl(15 100% 70% / 0.4);
+}
+
+.bg-primary-light-red\/10{
+  background-color: hsl(15 100% 70% / 0.1);
+}
+
+.bg-primary-light-red\/15{
+  background-color: hsl(15 100% 70% / 0.15);
+}
+
+.bg-primary-light-red\/90{
+  background-color: hsl(15 100% 70% / 0.9);
+}
+
+.bg-primary-light-red\/80{
+  background-color: hsl(15 100% 70% / 0.8);
+}
+
+.bg-primary-light-red\/70{
+  background-color: hsl(15 100% 70% / 0.7);
+}
+
+.bg-primary-light-red\/60{
+  background-color: hsl(15 100% 70% / 0.6);
+}
+
+.bg-primary-light-red\/50{
+  background-color: hsl(15 100% 70% / 0.5);
+}
+
+.p-1{
+  padding: 0.25rem;
 }
 
 .p-3{
@@ -734,6 +806,16 @@ video {
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-3{
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .text-center{
@@ -771,6 +853,10 @@ video {
   font-weight: 600;
 }
 
+.font-extrabold{
+  font-weight: 800;
+}
+
 .uppercase{
   text-transform: uppercase;
 }
@@ -794,8 +880,17 @@ video {
   color: hsl(224 65% 95% / var(--tw-text-opacity));
 }
 
+.text-primary-light-red{
+  --tw-text-opacity: 1;
+  color: hsl(15 100% 70% / var(--tw-text-opacity));
+}
+
 .transition-all{
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.duration-300{
+  transition-duration: 300ms;
 }
