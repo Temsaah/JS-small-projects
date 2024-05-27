@@ -33,22 +33,26 @@
         alt=""
       />
       <section class="pricing-component relative z-10 grid gap-16">
-        <div class="pricing-header mb-10 grid gap-2 text-center">
+        <div class="pricing-header mb-10 grid gap-2 text-center justify-center">
           <h1 class="text-3xl text-neutral-dark-desat-blue font-bold">
             Simple, traffic-based pricing
           </h1>
-          <div class="text grid gap-1 text-neutral-grayish-blue font-semibold">
+          <div
+            class="text grid justify-center gap-1 text-neutral-grayish-blue font-semibold md:flex"
+          >
             <p>Sign-up for our 30-day trial.</p>
             <p>No credit card required.</p>
           </div>
         </div>
-        <div class="pricing text-neutral-grayish-blue text-center grid gap-10">
-          <div class="views">
+        <div
+          class="pricing md:grid md:gap-x-20 md:grid-cols-2 md:grid-rows-3 md:items-center text-neutral-grayish-blue text-center grid gap-10"
+        >
+          <div class="views md:col-span-1 md:row-span-1">
             <p class="views-label uppercase font-bold tracking-widest">
               <span class="page-views">100</span>k pageviews
             </p>
           </div>
-          <div class="slider relative">
+          <div class="slider md:col-span-2 md:row-start-2 relative">
             <input
               class="w-full slider-bar"
               type="range"
@@ -56,7 +60,9 @@
               id="slider-range"
             />
           </div>
-          <div class="price flex justify-center items-center gap-2">
+          <div
+            class="price md:col-start-2 md:row-start-1 flex justify-center items-center gap-2"
+          >
             <span
               class="price-label text-neutral-dark-desat-blue font-bold text-4xl"
               >$16.00</span
@@ -64,17 +70,19 @@
             <span class="font-medium">/ month</span>
           </div>
           <div
-            class="plan relative flex justify-center items-center gap-5 text-sm font-medium"
+            class="plan md:col-span-2 md:row-start-3 relative flex justify-center items-center gap-5 text-sm font-medium"
           >
             <p>Monthly Billing</p>
             <div class="toggle-switch transition-all duration-300">
               <span class="switch-circle transition-all duration-300"></span>
             </div>
-            <p>Yearly Billing</p>
-            <div
-              class="discount absolute right-0 p-1 px-3 rounded-full bg-primary-light-red/20 font-extrabold text-primary-light-red"
-            >
-              <p class="discount-amount">25%</p>
+            <div class="yearly-billing relative">
+              <p>Yearly Billing</p>
+              <div
+                class="discount absolute translate-y-[50%] right-1/2 translate-x-1/2 sm:translate-x-[160%] sm:-translate-y-0 sm:top-0 sm:right-auto p-1 px-3 rounded-full bg-primary-light-red/20 font-extrabold text-primary-light-red"
+              >
+                <p class="discount-amount">-25%</p>
+              </div>
             </div>
           </div>
         </div>
@@ -96,7 +104,7 @@
         </div>
         <div class="cta text-center">
           <button
-            class="bg-neutral-dark-desat-blue p-3 px-16 rounded-full text-neutral-l-grayish-blue font-bold"
+            class="bg-neutral-dark-desat-blue hover:bg-neutral-dark-desat-blue/90 transition-all p-3 px-16 rounded-full text-neutral-l-grayish-blue font-bold"
           >
             Start my trial
           </button>
