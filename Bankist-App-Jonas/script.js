@@ -75,7 +75,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+let currentAccount;
+
 btnLogin.addEventListener('click', e => {
+  e.preventDefault();
   accounts.forEach(account => {
     let user = '';
     account.owner.split(' ').forEach(name => {
@@ -86,13 +89,87 @@ btnLogin.addEventListener('click', e => {
       inputLoginUsername.value == user &&
       inputLoginPin.value == account.pin
     ) {
-      e.preventDefault();
+      currentAccount = account;
+      // welcome
       labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
+
+      // Balance Calculate
       labelBalance.textContent = `${calculateBalance(account)}€`;
+
+      // Transactions container
+
+      updateMovementContainer(account);
+
       containerApp.style.opacity = '100';
     }
   });
 });
+
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+  currentAccount.movements.push(+inputLoanAmount.value);
+  updateMovementContainer(currentAccount);
+});
+
+btnTransfer.addEventListener('click', e => {
+  e.preventDefault();
+  if (+inputTransferAmount.value > calculateBalance(currentAccount)) {
+    inputTransferTo.value = '';
+    inputTransferAmount.value = '';
+    return;
+  }
+  let account = findAccountByUserName(inputTransferTo.value);
+  if (!account || account == currentAccount) {
+    inputTransferTo.value = '';
+    inputTransferAmount.value = '';
+    return;
+  }
+
+  account?.movements.push(+inputTransferAmount.value);
+
+  currentAccount.movements.push(-Number(inputTransferAmount.value));
+  updateMovementContainer(currentAccount);
+
+  inputTransferTo.value = '';
+  inputTransferAmount.value = '';
+});
+
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+  let currentAccountUserName = '';
+  currentAccount.owner.split(' ').forEach(name => {
+    currentAccountUserName += name[0].toLowerCase();
+  });
+
+  if (
+    inputCloseUsername.value == currentAccountUserName &&
+    inputClosePin.value == currentAccount.pin
+  ) {
+    for (let [i, account] of accounts.entries()) {
+      if (account == currentAccount) {
+        accounts.splice(i, 1);
+        containerApp.style.opacity = '0';
+
+        break;
+      }
+    }
+    inputCloseUsername.value = '';
+    inputClosePin.value = '';
+  }
+});
+
+function findAccountByUserName(userName) {
+  let foundAccount;
+  accounts.forEach(account => {
+    let user = '';
+    account.owner.split(' ').forEach(name => {
+      user += name[0].toLowerCase();
+    });
+
+    if (userName == user) foundAccount = account;
+  });
+  return foundAccount;
+}
 
 function calculateBalance(account) {
   let balance = 0;
@@ -100,6 +177,36 @@ function calculateBalance(account) {
   account.movements.forEach(movement => {
     balance += movement;
   });
-
   return balance;
+}
+
+function updateMovementContainer(account) {
+  containerMovements.innerHTML = '';
+  let sumIn = 0;
+  let sumOut = 0;
+  account.movements.forEach((movement, i) => {
+    let movementType;
+
+    if (movement > 0) {
+      movementType = 'deposit';
+      sumIn += movement;
+    } else {
+      movementType = 'withdrawal';
+      sumOut += movement;
+    }
+
+    let element = `<div class="movements__row">
+        <div class="movements__type movements__type--${movementType}">${
+      i + 1
+    } ${movementType}</div>
+        <div class="movements__value">${movement}€</div>
+      </div>`;
+    containerMovements.insertAdjacentHTML('afterbegin', element);
+
+    labelBalance.textContent = `${calculateBalance(account)}€`;
+  });
+
+  labelSumIn.textContent = `${sumIn}€`;
+  labelSumOut.textContent = `${Math.abs(sumOut)}€`;
+  labelSumInterest.textContent = `${sumIn * (account.interestRate / 100)}€`;
 }
