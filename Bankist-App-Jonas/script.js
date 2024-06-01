@@ -77,16 +77,24 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 let currentAccount;
 
+const createUserNames = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUserNames(accounts);
+
+console.log(accounts);
+
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
   accounts.forEach(account => {
-    let user = '';
-    account.owner.split(' ').forEach(name => {
-      user += name[0].toLowerCase();
-    });
-
     if (
-      inputLoginUsername.value == user &&
+      inputLoginUsername.value == account.username &&
       inputLoginPin.value == account.pin
     ) {
       currentAccount = account;
@@ -136,13 +144,9 @@ btnTransfer.addEventListener('click', e => {
 
 btnClose.addEventListener('click', e => {
   e.preventDefault();
-  let currentAccountUserName = '';
-  currentAccount.owner.split(' ').forEach(name => {
-    currentAccountUserName += name[0].toLowerCase();
-  });
 
   if (
-    inputCloseUsername.value == currentAccountUserName &&
+    inputCloseUsername.value == currentAccount.username &&
     inputClosePin.value == currentAccount.pin
   ) {
     for (let [i, account] of accounts.entries()) {
@@ -158,32 +162,36 @@ btnClose.addEventListener('click', e => {
   }
 });
 
+let sort = false;
+
+btnSort.addEventListener('click', () => {
+  updateMovementContainer(currentAccount, !sort);
+  sort = !sort;
+});
+
 function findAccountByUserName(userName) {
   let foundAccount;
   accounts.forEach(account => {
-    let user = '';
-    account.owner.split(' ').forEach(name => {
-      user += name[0].toLowerCase();
-    });
-
-    if (userName == user) foundAccount = account;
+    if (userName == account.username) foundAccount = account;
   });
   return foundAccount;
 }
 
 function calculateBalance(account) {
-  let balance = 0;
-
-  account.movements.forEach(movement => {
-    balance += movement;
-  });
-  return balance;
+  return account.movements.reduce((acc, curr) => acc + curr);
 }
 
-function updateMovementContainer(account) {
+function updateMovementContainer(account, sort = undefined) {
   containerMovements.innerHTML = '';
   let sumIn = 0;
   let sumOut = 0;
+
+  if (sort == true) {
+    account.movements.sort((a, b) => a - b);
+  } else if (sort == false) {
+    account.movements.sort((a, b) => b - a);
+  }
+
   account.movements.forEach((movement, i) => {
     let movementType;
 
