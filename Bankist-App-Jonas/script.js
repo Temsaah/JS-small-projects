@@ -183,8 +183,6 @@ function calculateBalance(account) {
 
 function updateMovementContainer(account, sort = undefined) {
   containerMovements.innerHTML = '';
-  let sumIn = 0;
-  let sumOut = 0;
 
   if (sort == true) {
     account.movements.sort((a, b) => a - b);
@@ -195,13 +193,8 @@ function updateMovementContainer(account, sort = undefined) {
   account.movements.forEach((movement, i) => {
     let movementType;
 
-    if (movement > 0) {
-      movementType = 'deposit';
-      sumIn += movement;
-    } else {
-      movementType = 'withdrawal';
-      sumOut += movement;
-    }
+    if (movement > 0) movementType = 'deposit';
+    else movementType = 'withdrawal';
 
     let element = `<div class="movements__row">
         <div class="movements__type movements__type--${movementType}">${
@@ -214,7 +207,20 @@ function updateMovementContainer(account, sort = undefined) {
     labelBalance.textContent = `${calculateBalance(account)}€`;
   });
 
+  const sumIn = account.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
   labelSumIn.textContent = `${sumIn}€`;
+
+  const sumOut = account.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
   labelSumOut.textContent = `${Math.abs(sumOut)}€`;
-  labelSumInterest.textContent = `${sumIn * (account.interestRate / 100)}€`;
+
+  const interest = account.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * account.interestRate) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumInterest.textContent = `${interest}€`;
 }
