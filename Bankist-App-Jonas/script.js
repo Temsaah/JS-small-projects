@@ -88,29 +88,23 @@ const createUserNames = function (accs) {
 };
 createUserNames(accounts);
 
-console.log(accounts);
-
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
-  accounts.forEach(account => {
-    if (
-      inputLoginUsername.value == account.username &&
-      inputLoginPin.value == account.pin
-    ) {
-      currentAccount = account;
-      // welcome
-      labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
 
-      // Balance Calculate
-      labelBalance.textContent = `${calculateBalance(account)}€`;
+  let account = accounts.find(
+    account =>
+      account.username == inputLoginUsername.value &&
+      account.pin == inputLoginPin.value
+  );
 
-      // Transactions container
-
-      updateMovementContainer(account);
-
-      containerApp.style.opacity = '100';
-    }
-  });
+  if (account) {
+    currentAccount = account;
+    labelWelcome.textContent = `Welcome back, ${account.owner.split(' ')[0]}`;
+    labelBalance.textContent = `${getBalance(account)}€`;
+    updateMovementContainer(account);
+    containerApp.style.opacity = '100';
+    inputLoginUsername.value = inputLoginPin.value = '';
+  }
 });
 
 btnLoan.addEventListener('click', e => {
@@ -121,25 +115,21 @@ btnLoan.addEventListener('click', e => {
 
 btnTransfer.addEventListener('click', e => {
   e.preventDefault();
-  if (+inputTransferAmount.value > calculateBalance(currentAccount)) {
-    inputTransferTo.value = '';
-    inputTransferAmount.value = '';
-    return;
+  let receiverAcc = accounts.find(acc => acc.username == inputTransferTo.value);
+  const amount = Number(inputTransferAmount.value);
+  const balance = getBalance(currentAccount);
+
+  if (
+    receiverAcc &&
+    amount > 0 &&
+    balance >= amount &&
+    receiverAcc.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-Number(inputTransferAmount.value));
+    receiverAcc.movements.push(+inputTransferAmount.value);
+    updateMovementContainer(currentAccount);
   }
-  let account = findAccountByUserName(inputTransferTo.value);
-  if (!account || account == currentAccount) {
-    inputTransferTo.value = '';
-    inputTransferAmount.value = '';
-    return;
-  }
-
-  account?.movements.push(+inputTransferAmount.value);
-
-  currentAccount.movements.push(-Number(inputTransferAmount.value));
-  updateMovementContainer(currentAccount);
-
-  inputTransferTo.value = '';
-  inputTransferAmount.value = '';
+  inputTransferTo.value = inputTransferAmount.value = '';
 });
 
 btnClose.addEventListener('click', e => {
@@ -149,16 +139,12 @@ btnClose.addEventListener('click', e => {
     inputCloseUsername.value == currentAccount.username &&
     inputClosePin.value == currentAccount.pin
   ) {
-    for (let [i, account] of accounts.entries()) {
-      if (account == currentAccount) {
-        accounts.splice(i, 1);
-        containerApp.style.opacity = '0';
-
-        break;
-      }
-    }
-    inputCloseUsername.value = '';
-    inputClosePin.value = '';
+    const accIndex = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(accIndex, 1);
+    containerApp.style.opacity = '0';
+    inputCloseUsername.value = inputClosePin.value = '';
   }
 });
 
@@ -177,7 +163,7 @@ function findAccountByUserName(userName) {
   return foundAccount;
 }
 
-function calculateBalance(account) {
+function getBalance(account) {
   return account.movements.reduce((acc, curr) => acc + curr);
 }
 
@@ -204,7 +190,7 @@ function updateMovementContainer(account, sort = undefined) {
       </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', element);
 
-    labelBalance.textContent = `${calculateBalance(account)}€`;
+    labelBalance.textContent = `${getBalance(account)}€`;
   });
 
   const sumIn = account.movements
