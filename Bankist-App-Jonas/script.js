@@ -109,8 +109,16 @@ btnLogin.addEventListener('click', e => {
 
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
-  currentAccount.movements.push(+inputLoanAmount.value);
-  updateMovementContainer(currentAccount);
+  const loanAmount = Number(inputLoanAmount.value);
+
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some(mov => mov > loanAmount * (10 / 100))
+  ) {
+    currentAccount.movements.push(loanAmount);
+    updateMovementContainer(currentAccount);
+  }
+  inputLoanAmount.value = '';
 });
 
 btnTransfer.addEventListener('click', e => {
@@ -167,16 +175,14 @@ function getBalance(account) {
   return account.movements.reduce((acc, curr) => acc + curr);
 }
 
-function updateMovementContainer(account, sort = undefined) {
+function updateMovementContainer(account, sort = false) {
   containerMovements.innerHTML = '';
 
-  if (sort == true) {
-    account.movements.sort((a, b) => a - b);
-  } else if (sort == false) {
-    account.movements.sort((a, b) => b - a);
-  }
+  const movs = sort
+    ? account.movements.slice().sort((a, b) => a - b)
+    : account.movements;
 
-  account.movements.forEach((movement, i) => {
+  movs.forEach((movement, i) => {
     let movementType;
 
     if (movement > 0) movementType = 'deposit';
