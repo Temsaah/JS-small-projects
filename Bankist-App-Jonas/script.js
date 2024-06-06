@@ -80,7 +80,7 @@ const account4 = {
     '2020-07-26T12:01:20.894Z',
   ],
   currency: 'USD',
-  locale: 'en-US',
+  locale: 'ar-SA',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -231,10 +231,13 @@ function findAccountByUserName(userName) {
 }
 
 function getBalance(account) {
-  return account.movements.reduce((acc, curr) => acc + curr).toFixed(2);
+  const balance = account.movements
+    .reduce((acc, curr) => acc + curr)
+    .toFixed(2);
+  return new Intl.NumberFormat(account.locale).format(balance);
 }
 
-function formatMovementDate(date) {
+function formatMovementDate(date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
@@ -244,10 +247,11 @@ function formatMovementDate(date) {
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
   else {
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth()}`.padStart(2, 0);
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    // const day = `${date.getDate()}`.padStart(2, 0);
+    // const month = `${date.getMonth()}`.padStart(2, 0);
+    // const year = date.getFullYear();
+    // return `${day}/${month}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date);
   }
 }
 
@@ -263,27 +267,33 @@ function updateMovementContainer(account, sort = false) {
     let movementType;
 
     const date = new Date(account.movementsDates[i]);
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, account.locale);
+    const now = new Date();
 
     if (movement > 0) movementType = 'deposit';
     else movementType = 'withdrawal';
+
+    const formattedMov = new Intl.NumberFormat(account.locale).format(movement);
 
     let element = `<div class="movements__row">
         <div class="movements__type movements__type--${movementType}">${
       i + 1
     } ${movementType}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${movement.toFixed(2)}€</div>
+        <div class="movements__value">${formattedMov}€</div>
       </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', element);
 
     labelBalance.textContent = `${getBalance(account)}€`;
-    labelDate.textContent = `${String(now.getDate()).padStart(2, 0)}/${String(
-      now.getMonth() + 1
-    ).padStart(2, 0)}/${now.getFullYear()}, ${String(now.getHours()).padStart(
-      2,
-      0
-    )}:${String(now.getMinutes()).padStart(2, 0)}`;
+    // labelDate.textContent = `${String(now.getDate()).padStart(2, 0)}/${String(
+    //   now.getMonth() + 1
+    // ).padStart(2, 0)}/${now.getFullYear()}, ${String(now.getHours()).padStart(
+    //   2,
+    //   0
+    // )}:${String(now.getMinutes()).padStart(2, 0)}`;
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale
+    ).format(now);
   });
 
   const sumIn = account.movements
