@@ -125,13 +125,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-let currentAccount;
-
-// Fake Login
-
-currentAccount = account1;
-updateMovementContainer(currentAccount);
-containerApp.style.opacity = '100';
+let currentAccount, timer;
 
 const createUserNames = function (accs) {
   accs.forEach(acc => {
@@ -160,6 +154,8 @@ btnLogin.addEventListener('click', e => {
     updateMovementContainer(account);
     containerApp.style.opacity = '100';
     inputLoginUsername.value = inputLoginPin.value = '';
+    if (timer) clearInterval(timer);
+    timer = runTimer();
   }
 });
 
@@ -176,6 +172,9 @@ btnLoan.addEventListener('click', e => {
     updateMovementContainer(currentAccount);
   }
   inputLoanAmount.value = '';
+
+  clearInterval(timer);
+  timer = runTimer();
 });
 
 btnTransfer.addEventListener('click', e => {
@@ -197,6 +196,10 @@ btnTransfer.addEventListener('click', e => {
     updateMovementContainer(currentAccount);
   }
   inputTransferTo.value = inputTransferAmount.value = '';
+
+  // Reset timer
+  clearInterval(timer);
+  timer = runTimer();
 });
 
 btnClose.addEventListener('click', e => {
@@ -312,4 +315,26 @@ function updateMovementContainer(account, sort = false) {
     .filter(int => int >= 1)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+}
+
+function runTimer() {
+  let time = 2 * 60;
+
+  function tick() {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(time % 60)).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+    time--;
+
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Login to get started';
+      containerApp.style.opacity = '0';
+    }
+  }
+
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
 }
