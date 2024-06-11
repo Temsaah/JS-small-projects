@@ -47,6 +47,7 @@ document.querySelector('.nav__links').addEventListener('click', e => {
   }
 });
 
+const nav = document.querySelector('.nav');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabContents = document.querySelectorAll(`.operations__content`);
@@ -67,3 +68,21 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+const handleHover = function (opacity, e) {
+  if (e.target.classList.contains('nav__link')) {
+    const targetLink = e.target;
+    const logo = nav.querySelector('.nav__logo');
+
+    document.querySelectorAll('.nav__link').forEach(link => {
+      if (link != targetLink) {
+        link.style.opacity = opacity;
+      }
+    });
+    logo.style.opacity = opacity;
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(null, 0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(null, 1));
