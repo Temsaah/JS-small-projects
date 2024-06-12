@@ -86,3 +86,13 @@ const handleHover = function (opacity, e) {
 nav.addEventListener('mouseover', handleHover.bind(null, 0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(null, 1));
+
+const initialCoords = document
+  .querySelector('#section--1')
+  .getBoundingClientRect();
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else nav.classList.remove('sticky');
+});
