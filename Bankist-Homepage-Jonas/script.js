@@ -91,8 +91,37 @@ const initialCoords = document
   .querySelector('#section--1')
   .getBoundingClientRect();
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > initialCoords.top) {
-    nav.classList.add('sticky');
-  } else nav.classList.remove('sticky');
+const header = document.querySelector('.header');
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${nav.getBoundingClientRect().height}px`,
+});
+headerObserver.observe(header);
+
+const sections = document.querySelectorAll('section');
+
+const showSection = function (entries, observe) {
+  const [entry] = entries;
+
+  if (entry.isIntersecting) entry.target.classList.remove('section--hidden');
+  observe.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(showSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+sections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
 });
