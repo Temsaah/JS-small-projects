@@ -136,7 +136,6 @@ const loadImg = function (entries, observe) {
   const [entry] = entries;
   if (entry.isIntersecting) {
     entry.target.src = entry.target.dataset.src;
-    console.log(entry.target);
     entry.target.addEventListener('load', () =>
       entry.target.classList.remove('lazy-img')
     );
@@ -150,3 +149,70 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: '200px',
 });
 imgs.forEach(img => imgObserver.observe(img));
+
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.querySelector('.dots');
+const rightBtn = document.querySelector('.slider__btn--right');
+const leftBtn = document.querySelector('.slider__btn--left');
+let currSlide = 0;
+
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotsContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide='${i}'></button>`
+    );
+  });
+};
+
+createDots();
+
+const activateDot = function (slide) {
+  document.querySelectorAll('.dots__dot').forEach(dot => {
+    dot.classList.remove('dots__dot--active');
+  });
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+  activateDot(slide);
+};
+
+const nextSlide = function () {
+  if (currSlide === slides.length - 1) {
+    currSlide = 0;
+  } else currSlide++;
+
+  goToSlide(currSlide);
+};
+
+const prevSlide = function () {
+  if (currSlide === 0) currSlide = slides.length - 1;
+  else currSlide--;
+
+  goToSlide(currSlide);
+};
+
+goToSlide(0);
+
+rightBtn.addEventListener('click', nextSlide);
+leftBtn.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'ArrowRight') nextSlide();
+});
+
+dotsContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    const slide = e.target.dataset.slide;
+
+    goToSlide(slide);
+  }
+});
