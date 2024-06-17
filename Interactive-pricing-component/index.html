@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Interactive pricing component</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body
+    class="min-h-screen font-Manrope grid place-items-center place-content-center bg-neutral-l-grayish-blue"
+  >
+    <main class="bg-white relative p-7 py-10 rounded-xl">
+      <img
+        class="absolute z-0 top-0 left-1/2 -translate-x-1/2 w-44"
+        src="images/pattern-circles.svg"
+        alt=""
+      />
+      <section class="pricing-component relative z-10 grid gap-16">
+        <div class="pricing-header mb-10 grid gap-2 text-center justify-center">
+          <h1 class="text-3xl text-neutral-dark-desat-blue font-bold">
+            Simple, traffic-based pricing
+          </h1>
+          <div
+            class="text grid justify-center gap-1 text-neutral-grayish-blue font-semibold md:flex"
+          >
+            <p>Sign-up for our 30-day trial.</p>
+            <p>No credit card required.</p>
+          </div>
+        </div>
+        <div
+          class="pricing md:grid md:gap-x-20 md:grid-cols-2 md:grid-rows-3 md:items-center text-neutral-grayish-blue text-center grid gap-10"
+        >
+          <div class="views md:col-span-1 md:row-span-1">
+            <p class="views-label uppercase font-bold tracking-widest">
+              <span class="page-views">100</span>k pageviews
+            </p>
+          </div>
+          <div class="slider md:col-span-2 md:row-start-2 relative">
+            <input
+              class="w-full slider-bar"
+              type="range"
+              name=""
+              id="slider-range"
+            />
+          </div>
+          <div
+            class="price md:col-start-2 md:row-start-1 flex justify-center items-center gap-2"
+          >
+            <span
+              class="price-label text-neutral-dark-desat-blue font-bold text-4xl"
+              >$16.00</span
+            >
+            <span class="font-medium">/ month</span>
+          </div>
+          <div
+            class="plan md:col-span-2 md:row-start-3 relative flex justify-center items-center gap-5 text-sm font-medium"
+          >
+            <p>Monthly Billing</p>
+            <div class="toggle-switch transition-all duration-300">
+              <span class="switch-circle transition-all duration-300"></span>
+            </div>
+            <div class="yearly-billing relative">
+              <p>Yearly Billing</p>
+              <div
+                class="discount absolute translate-y-[50%] right-1/2 translate-x-1/2 sm:translate-x-[160%] sm:-translate-y-0 sm:top-0 sm:right-auto p-1 px-3 rounded-full bg-primary-light-red/20 font-extrabold text-primary-light-red"
+              >
+                <p class="discount-amount">-25%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="features grid gap-3 text-sm text-neutral-grayish-blue font-semibold justify-center"
+        >
+          <div class="feature flex items-center gap-5 justify-center">
+            <i class="fa-solid fa-check text-neutral-grayish-blue text-sm"></i>
+            <p>Unlimited websites</p>
+          </div>
+          <div class="feature flex items-center gap-5 justify-center">
+            <i class="fa-solid fa-check text-neutral-grayish-blue text-sm"></i>
+            <p>100% data ownership</p>
+          </div>
+          <div class="feature flex items-center gap-5 justify-center">
+            <i class="fa-solid fa-check text-neutral-grayish-blue text-sm"></i>
+            <p>Email reports</p>
+          </div>
+        </div>
+        <div class="cta text-center">
+          <button
+            class="bg-neutral-dark-desat-blue hover:bg-neutral-dark-desat-blue/90 transition-all p-3 px-16 rounded-full text-neutral-l-grayish-blue font-bold"
+          >
+            Start my trial
+          </button>
+        </div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

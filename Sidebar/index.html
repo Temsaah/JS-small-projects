@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SideBar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body class="bg-[#222831]">
+    <header class="p-4 px-20">
+      <i
+        class="fa-solid fa-bars open-sidebar cursor-pointer text-white text-3xl"
+      ></i>
+      <aside
+        class="sidebar absolute flex flex-col gap-10 top-0 -left-0 -translate-x-full duration-300 h-full bg-[#31363F] w-fit"
+      >
+        <div class="navbar-header p-8 py-4 flex gap-40 items-center">
+          <h1 class="text-2xl font-bold text-[#76ABAE]">Sidebar</h1>
+          <i
+            class="fa-solid close-sidebar cursor-pointer fa-x text-xl text-[#9B3922]"
+          ></i>
+        </div>
+        <nav class="py-4">
+          <ul>
+            <li class="p-8 py-4 cursor-pointer hover:bg-[#76ABAE]">
+              <a class="text-[#EEEEEE] text-xl" href="#">Home</a>
+            </li>
+            <li class="p-8 py-4 cursor-pointer hover:bg-[#76ABAE]">
+              <a class="text-[#EEEEEE] text-xl" href="#">About</a>
+            </li>
+            <li class="p-8 py-4 cursor-pointer hover:bg-[#76ABAE]">
+              <a class="text-[#EEEEEE] text-xl" href="#">Project</a>
+            </li>
+            <li class="p-8 py-4 cursor-pointer hover:bg-[#76ABAE]">
+              <a class="text-[#EEEEEE] text-xl" href="#">Contact</a>
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="social-links flex gap-5 text-[#EEEEEE] py-8 self-center mt-auto"
+        >
+          <i class="text-2xl fa-brands fa-facebook"></i>
+          <i class="text-2xl fa-brands fa-twitter"></i>
+          <i class="text-2xl fa-brands fa-instagram"></i>
+        </div>
+      </aside>
+    </header>
+    <script src="app.js"></script>
+  </body>
+</html>

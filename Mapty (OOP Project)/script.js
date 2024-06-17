@@ -10,6 +10,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+<<<<<<< HEAD
 
 let map, mapEvent;
 
@@ -71,3 +72,5 @@ inputType.addEventListener('change', function () {
   inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
 
 });
+=======
+>>>>>>> 4d74c3df01ed2542f32483793f3ec8fe615c303f
