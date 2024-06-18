@@ -10,34 +10,53 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
-<<<<<<< HEAD
 
 let map, mapEvent;
 
-navigator.geolocation?.getCurrentPosition(
-  function (position) {
+class App {
+  #map;
+  #mapEvent;
+  constructor() {
+    this._getPosition();
+  }
+
+  _getPosition() {
+    navigator.geolocation?.getCurrentPosition(
+      this._loadMap.bind(this),
+      function () {
+        alert("Couldn't get your position");
+      }
+    );
+  }
+
+  _loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
 
     const coords = [latitude, longitude];
 
-    map = L.map('map').setView(coords, 13);
+    this.#map = L.map('map').setView(coords, 13);
 
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    }).addTo(this.#map);
 
-    map.on('click', function (mapE) {
-      mapEvent = mapE;
+    this.#map.on('click', function (mapE) {
+      this.#mapEvent = mapE;
       form.classList.remove('hidden');
       inputDistance.focus();
     });
-  },
-  function () {
-    alert("Couldn't get your position");
   }
-);
+
+  _showForm() {}
+
+  _toggleElevationField() {}
+
+  _newWorkout() {}
+}
+
+const app = new App();
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -70,7 +89,4 @@ form.addEventListener('submit', function (e) {
 inputType.addEventListener('change', function () {
   inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
   inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-
 });
-=======
->>>>>>> 4d74c3df01ed2542f32483793f3ec8fe615c303f
