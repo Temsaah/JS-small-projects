@@ -71,11 +71,22 @@ function renderCountry(data, className = '') {
   </article>`;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
 }
+
+const renderError = function (msg) {
+  console.log(msg);
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
 
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error(`Country not found ${res.status}`);
+
+      return res.json();
+    })
     .then(function (data) {
       renderCountry(data[0]);
 
@@ -86,7 +97,12 @@ const getCountryData = function (country) {
       return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
     })
     .then(res => res.json())
-    .then(neighbour => renderCountry(neighbour[0], 'neighbour'));
+    .then(neighbour => renderCountry(neighbour[0], 'neighbour'))
+    .catch(err => {
+      renderError(`${err.message}. Try again!`);
+    });
 };
 
-getCountryData('Germany');
+btn.addEventListener('click', function () {
+  getCountryData('GermanyZ');
+});
