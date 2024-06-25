@@ -111,5 +111,21 @@ const getCountryData = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  getCountryData('Australia');
+  getCountryData('UNITED KINGDOM');
 });
+
+function whereAmI(lat, lng) {
+  fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=423330191191864777309x44686`
+  )
+    .then(res => res.json())
+    .then(data => fetch(`https://restcountries.com/v3.1/name/${data.country}`))
+    .then(res => res.json())
+    .then(country => {
+      console.log(country);
+      renderCountry(country[0]);
+    })
+    .catch(err => console.log(err));
+}
+
+whereAmI(51.50354, -0.12768);
