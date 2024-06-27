@@ -114,25 +114,26 @@ btn.addEventListener('click', function () {
   whereAmI();
 });
 
-function whereAmI() {
-  getPosition()
-    .then(pos => {
-      const { latitude: lat, longitude: lng } = pos.coords;
-      return fetch(
-        `https://geocode.xyz/${lat},${lng}?geoit=json&auth=423330191191864777309x44686`
-      );
-    })
-    .then(res => res.json())
-    .then(data => fetch(`https://restcountries.com/v3.1/name/${data.country}`))
-    .then(res => res.json())
-    .then(country => {
-      renderCountry(country[0]);
-    })
-    .catch(err => console.log(err));
-}
-
 function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
+}
+
+async function whereAmI() {
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  const resGeo = await fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=423330191191864777309x44686`
+  );
+
+  const dataGeo = await resGeo.json();
+
+  const res = await fetch(
+    `https://restcountries.com/v3.1/name/${dataGeo.country}`
+  );
+  const data = await res.json();
+
+  renderCountry(data[0]);
 }
