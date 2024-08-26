@@ -11,8 +11,11 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 let map, mapEvent;
 =======
+=======
+>>>>>>> origin/main
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
@@ -60,15 +63,21 @@ class Cycling extends Workout {
     return this.speed;
   }
 }
+<<<<<<< HEAD
 >>>>>>> 0b7643f (Save workouts in localstorage)
+=======
+>>>>>>> origin/main
 
 class App {
   #map;
   #mapEvent;
 <<<<<<< HEAD
+<<<<<<< HEAD
   constructor() {
     this._getPosition();
 =======
+=======
+>>>>>>> origin/main
   #mapZoomLevel = 13;
   #workouts = [];
   constructor() {
@@ -78,7 +87,10 @@ class App {
 
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+<<<<<<< HEAD
 >>>>>>> 0b7643f (Save workouts in localstorage)
+=======
+>>>>>>> origin/main
   }
 
   _getPosition() {
@@ -97,16 +109,21 @@ class App {
     const coords = [latitude, longitude];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.#map = L.map('map').setView(coords, 13);
 =======
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 >>>>>>> 0b7643f (Save workouts in localstorage)
+=======
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
+>>>>>>> origin/main
 
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     this.#map.on('click', function (mapE) {
       this.#mapEvent = mapE;
@@ -157,6 +174,8 @@ inputType.addEventListener('change', function () {
   inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
 });
 =======
+=======
+>>>>>>> origin/main
     this.#map.on('click', this._showForm.bind(this));
 
     this.#workouts.forEach(workout => {
@@ -346,4 +365,7 @@ inputType.addEventListener('change', function () {
 }
 
 const app = new App();
+<<<<<<< HEAD
 >>>>>>> 0b7643f (Save workouts in localstorage)
+=======
+>>>>>>> origin/main
